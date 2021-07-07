@@ -17,3 +17,69 @@ Um fabricante de plásticos planeja criar um novo produto a partir de misturas d
 \end{table}
 
 O novo produto deve ser constituído de exatamente 20\% do elemento A, pelo menos 30\% do elemento B e pelo menos 20\% do elemento C. Devido a efeitos colaterais dos compostos 1 e 2, eles não podem exceder 30\% e 40\% da composição do novo produto, respectivamente. Nesta questão você deve projetar um programa linear para encontrar o modo mais barato de fazer a mistura para um quilo do produto.
+
+\itemdsep
+\def\eA{{\text{A}}}
+\def\eB{{\text{B}}}
+\def\eC{{\text{C}}}
+\def\eX{{\text{X}}}
+
+Vetores
+
+\begin{align*}
+    R &= \begin{bmatrix} r_1 & r_2 & r_3 & r_4 \end{bmatrix}^\intercal \\
+    C &= \begin{bmatrix} c_1 & c_2 & c_3 & c_4 \end{bmatrix}^\intercal \\
+    P &= \begin{bmatrix}
+        P_\eA \\
+        P_\eB \\
+        P_\eC
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        p_{\eA,1} & p_{\eA,2} & p_{\eA,3} & p_{\eA,4} \\
+        p_{\eB,1} & p_{\eB,2} & p_{\eB,3} & p_{\eB,4} \\
+        p_{\eC,1} & p_{\eC,2} & p_{\eC,3} & p_{\eC,4}
+    \end{bmatrix}
+\end{align*}
+
+Dada uma mistura com massa $m$ e proporções $r_1, r_2, r_3, r_4$, o custo total é
+\begin{align*}
+    S &= c_1 r_1 m + c_2 r_2 m + c_3 r_3 m + c_4 r_4 m \\
+    \frac{S}{m} = s &= c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 r_4 \\
+    s &= C \cdot R
+\end{align*}
+
+As quantidade de um elemento X = A, B, C são
+\begin{align*}
+    m_\eX &= p_{\eX,1} r_1 m + \cdots + p_{\eX,4} r_4 m \\
+    p_\eX &= \sum_{i = 1}^4 p_{\eX,i} r_i \\
+    \begin{bmatrix} p_\eA \\ p_\eB \\ p_\eC \end{bmatrix}
+    &= P \times R
+\end{align*}
+
+~
+
+\begin{description}
+    \item[Variáveis] $r_i =$ proporção do composto $i = 1, 2, 3, 4$
+
+    \item[Função objetivo]
+    \begin{align*}
+        \min s &= c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 r_4 \\
+        &= c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 \left(1 - r_1 - r_2 - r_3\right) \\
+        &= c_4 + (c_1 - c_4) r_1 + (c_2 - c_4) r_2 + (c_3 - c_4) r_3
+    \end{align*}
+
+    \item[Restrição (i)] $p_{\eA,1} r_1 + p_{\eA,2} r_2 + p_{\eA,3} r_3 + p_{\eA,4} r_4 = 0.2$
+
+    \item[Restrição (ii)] $p_{\eB,1} r_1 + p_{\eB,2} r_2 + p_{\eB,3} r_3 + p_{\eB,4} r_4 \geq 0.3$
+
+    \item[Restrição (iii)] $p_{\eC,1} r_1 + p_{\eC,2} r_2 + p_{\eC,3} r_3 + p_{\eC,4} r_4 \geq 0.2$
+
+    \item[Restrição (iv)] $r_1 \leq 0.3$
+
+    \item[Restrição (v)] $r_2 \leq 0.4$
+
+    \item[Totalidade] $r_1 + r_2 + r_3 + r_4 = 1$
+
+    \item[Parte de um total] $0 \leq r_1, r_2, r_3, r_4 \leq 1$.
+\end{description}
