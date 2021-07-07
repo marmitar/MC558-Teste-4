@@ -2,4 +2,31 @@ Seja MM o problema da multiplicar duas matrizes quadradas: [...]
 
 Seja MQ o problema de calcular o quadrado de uma matriz quadrada: [...]
 
-Suponha que MM tenha cota inferior $\Omega(n^{2.5})$. Mostre que MQ tem cota inferior $\Omega(n^{2.5})$. Descreva claramente as funções $\tau_I$ e $\tau_S$. Justifique.
+Suponha que MM tenha cota inferior $\Omega\left(n^{2.5}\right)$. Mostre que MQ tem cota inferior $\Omega\left(n^{2.5}\right)$. Descreva claramente as funções $\tau_I$ e $\tau_S$. Justifique.
+
+\itemdsep
+
+\[
+    \tau_I:
+    \qquad
+    P_{2n \times 2n} = \begin{bmatrix}
+        A_{n \times n} & \\
+         & B_{n \times n}
+    \end{bmatrix}
+    \qquad
+    p_{i,j} = \begin{cases}
+        a_{i,j} & \text{se $1 \leq i,j \leq n$} \\
+        b_{i-n,j-n} & \text{se $n < i,j \leq 2n$} \\
+        0 & \text{caso contrário}
+    \end{cases}
+\]
+\[
+    \tau_S:
+    \qquad
+    Q_{2n \times 2n} = \begin{bmatrix}
+        A^2 & A B = C_{n \times n} \\
+        B A & B^2
+    \end{bmatrix}
+    \qquad
+    c_{i,j} = Q_{i,j+n}
+\]
