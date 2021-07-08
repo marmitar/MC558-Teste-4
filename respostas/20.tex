@@ -24,62 +24,57 @@ O novo produto deve ser constituído de exatamente 20\% do elemento A, pelo meno
 \def\eC{{\text{C}}}
 \def\eX{{\text{X}}}
 
-Vetores
+Considere $p_{\eX,i}$ como a proporção do elemento X no composto $i$ e como $r_i$ a proporção do composto $i$ na mistura. Então, a porcentagem $p_\eX$ do elemento X na mistura final é dada por:
 
+\[
+    p_\eX = \sum_{i} p_{\eX,i} r_i
+        = p_{\eX,1} r_1 + p_{\eX,2} r_2 + p_{\eX,3} r_3 + p_{\eX,4} r_4
+\]
+
+Com isso, temos que as restrições da mistura devem ser dadas por
 \begin{align*}
-    R &= \begin{bmatrix} r_1 & r_2 & r_3 & r_4 \end{bmatrix}^\intercal \\
-    C &= \begin{bmatrix} c_1 & c_2 & c_3 & c_4 \end{bmatrix}^\intercal \\
-    P &= \begin{bmatrix}
-        P_\eA \\
-        P_\eB \\
-        P_\eC
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        p_{\eA,1} & p_{\eA,2} & p_{\eA,3} & p_{\eA,4} \\
-        p_{\eB,1} & p_{\eB,2} & p_{\eB,3} & p_{\eB,4} \\
-        p_{\eC,1} & p_{\eC,2} & p_{\eC,3} & p_{\eC,4}
-    \end{bmatrix}
+    p_\eA &= p_{\eA,1} r_1 + p_{\eA,2} r_2 + p_{\eA,3} r_3 + p_{\eA,4} r_4 = 20\% \\
+    p_\eB &= p_{\eB,1} r_1 + p_{\eB,2} r_2 + p_{\eB,3} r_3 + p_{\eB,4} r_4 \geq 30\% \\
+    p_\eC &= p_{\eC,1} r_1 + p_{\eC,2} r_2 + p_{\eC,3} r_3 + p_{\eC,4} r_4 \geq 20\%
 \end{align*}
 
-Dada uma mistura com massa $m$ e proporções $r_1, r_2, r_3, r_4$, o custo total é
-\begin{align*}
-    S &= c_1 r_1 m + c_2 r_2 m + c_3 r_3 m + c_4 r_4 m \\
-    \frac{S}{m} = s &= c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 r_4 \\
-    s &= C \cdot R
-\end{align*}
+O objetivo do programa seria então \textbf{minimizar} o custo $s$ por Kg da mistura a partir dos custos $c_i$ de cada composto, que é dado por:
+\[
+    s = c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 r_4
+\]
 
-As quantidade de um elemento X = A, B, C são
-\begin{align*}
-    m_\eX &= p_{\eX,1} r_1 m + \cdots + p_{\eX,4} r_4 m \\
-    p_\eX &= \sum_{i = 1}^4 p_{\eX,i} r_i \\
-    \begin{bmatrix} p_\eA \\ p_\eB \\ p_\eC \end{bmatrix}
-    &= P \times R
-\end{align*}
+Além disso, a mistura é feita apenas dos compostos $i$ que não podem ser negativos, então
+\begin{gather*}
+    r_1 + r_2 + r_3 + r_4 = 100\% \\
+    0 \leq r_1, r_2, r_3, r_4
+\end{gather*}
+
+As últimas restrições são somente nas proporções dos compostos 1 e 2 na mistura: $r_1 \leq 30\%$ e $r_2 \leq 40\%$.
 
 ~
 
 \begin{description}
-    \item[Variáveis] $r_i =$ proporção do composto $i = 1, 2, 3, 4$
+    \reducemathskip{}
+    \item[Variáveis:] $r_i \doteq$ proporção do composto $i = 1, 2, 3, 4$ na mistura
 
-    \item[Função objetivo]
-    \begin{align*}
-        \min s &= c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 r_4 \\
-        &= c_1 r_1 + c_2 r_2 + c_3 r_3 + c_4 \left(1 - r_1 - r_2 - r_3\right) \\
-        &= c_4 + (c_1 - c_4) r_1 + (c_2 - c_4) r_2 + (c_3 - c_4) r_3
-    \end{align*}
+    \item[Função objetivo:] $\min s = 20 r_1 + 30 r_2 + 20 r_3 + 15 r_4$
 
-    \item[Restrição (i)] $p_{\eA,1} r_1 + p_{\eA,2} r_2 + p_{\eA,3} r_3 + p_{\eA,4} r_4 = 0.2$
+    \item[Restrição (i):] (proporção do elemento A)
+    \[ 0.3 r_1 + 0.2 r_2 + 0.4 r_3 + 0.2 r_4 = 0.2 \]
 
-    \item[Restrição (ii)] $p_{\eB,1} r_1 + p_{\eB,2} r_2 + p_{\eB,3} r_3 + p_{\eB,4} r_4 \geq 0.3$
+    \item[Restrição (ii):] (proporção de B)
+    \[ 0.2 r_1 + 0.6 r_2 + 0.3 r_3 + 0.4 r_4 \geq 0.3 \]
 
-    \item[Restrição (iii)] $p_{\eC,1} r_1 + p_{\eC,2} r_2 + p_{\eC,3} r_3 + p_{\eC,4} r_4 \geq 0.2$
+    \item[Restrição (iii):] (proporção de C)
+    \[ 0.4 r_1 + 0.15 r_2 + 0.25 r_3 + 0.3 r_4 \geq 0.2 \]
 
-    \item[Restrição (iv)] $r_1 \leq 0.3$
+    \item[Restrição (iv):] (limite de uso do composto 1)
+    \[ r_1 \leq 0.3 \]
 
-    \item[Restrição (v)] $r_2 \leq 0.4$
+    \item[Restrição (v):] (limite do composto 2)
+    \[ r_2 \leq 0.4 \]
 
-    \item[Totalidade] $r_1 + r_2 + r_3 + r_4 = 1$
+    \item[Proporção da mistura:] $r_1 + r_2 + r_3 + r_4 = 1$
 
-    \item[Parte de um total] $0 \leq r_1, r_2, r_3, r_4 \leq 1$.
+    \item[Não-negatividade:] $r_1, r_2, r_3, r_4 \geq 0$
 \end{description}
