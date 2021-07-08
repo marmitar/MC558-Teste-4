@@ -6,56 +6,44 @@ Suponha que MM tenha cota inferior $\Omega\left(n^{2.5}\right)$. Mostre que MQ t
 
 \itemdsep
 
-\begin{lemma} \label{lemma:redutivel}
-    O problema MM é redutível a MQ em tempo $O\left(n^2\right)$.
-\end{lemma}
+Considere a seguinte transformação $\tau_I$ de uma instância $I_\text{MM}$ para $I_\text{MQ}$ definida por $\tau_I(A, B, n) = (P, 2n)$ onde
+\[
+    P_{2n \times 2n} = \begin{bmatrix} & A \\ B & \end{bmatrix}
+    = \begin{bmatrix}
+        0         &        & 0         & (A)_{1,1} & \dots  & (A)_{1,n} \\
+                    & \ddots &           & \vdots    & \ddots & \vdots    \\
+        0         &        & 0         & (A)_{n,1} & \dots  & (A)_{n,n} \\
+        (B)_{1,1} & \dots  & (B)_{1,n} & 0         &        & 0         \\
+        \vdots    & \ddots & \vdots    &           & \ddots &           \\
+        (B)_{n,1} & \dots  & (B)_{n,n} & 0         &        & 0         \\
+    \end{bmatrix}
+\]
+Mais especificamente,
+\[
+    (P)_{i,j} = \begin{cases}
+        ~ (A)_{i,j-n} & \text{se $1 \leq i \leq n$ e $n < j \leq 2 n$} \\
+        ~ (B)_{i-n,j} & \text{se $n < i \leq 2 n$ e $1 \leq j \leq n$}\\
+        ~ 0 & \text{caso contrário}
+    \end{cases}
+\]
 
-\begin{proof}
-    Considere uma transformação $\tau_I$ de uma instância $I_\text{MM}$ para $I_\text{MQ}$ dada por $\tau_I(A, B, n) = (P, 2n)$ onde
-    \[
-        P_{2n \times 2n} = \begin{bmatrix} & A \\ B & \end{bmatrix}
-        = \begin{bmatrix}
-            0         &        & 0         & (A)_{1,1} & \dots  & (A)_{1,n} \\
-                      & \ddots &           & \vdots    & \ddots & \vdots    \\
-            0         &        & 0         & (A)_{n,1} & \dots  & (A)_{n,n} \\
-            (B)_{1,1} & \dots  & (B)_{1,n} & 0         &        & 0         \\
-            \vdots    & \ddots & \vdots    &           & \ddots &           \\
-            (B)_{n,1} & \dots  & (B)_{n,n} & 0         &        & 0         \\
-        \end{bmatrix}
-    \]
-    Mais especificamente,
-    \[
-        (P)_{i,j} = \begin{cases}
-            ~ (A)_{i,j-n} & \text{se $1 \leq i \leq n$ e $n < j \leq 2 n$} \\
-            ~ (B)_{i-n,j} & \text{se $n < i \leq 2 n$ e $1 \leq j \leq n$}\\
-            ~ 0 & \text{caso contrário}
-        \end{cases}
-    \]
+Então, uma solução $Q_{2n \times 2n} = P \cdot P$ de MQ será dada por
+\[
+    Q = P P
+    = \begin{bmatrix} & A \\ B & \end{bmatrix} \begin{bmatrix} & A \\ B & \end{bmatrix}
+    = \begin{bmatrix} A B & \\ & A B \end{bmatrix}
+\]
 
-    Então, uma solução $Q_{2n \times 2n} = P \cdot P$ de MQ será dada por
-    \[
-        Q = P P
-        = \begin{bmatrix} & A \\ B & \end{bmatrix} \begin{bmatrix} & A \\ B & \end{bmatrix}
-        = \begin{bmatrix} A B & \\ & A B \end{bmatrix}
-    \]
+E podemos tomar $\tau_S(Q) = C$ com $C_{n \times n}$ sendo as primeiras $n$ colunas das primeiras $n$ linhas de $Q$. Desse modo, temos uma solução $C = A \cdot B$ para MM pois,
+\begin{align*}
+    (C)_{i,j} &= (Q)_{i,j} \\
+        &= \sum_{k = 1}^{2n} (P)_{i,k} (P)_{k,j} \\
+        &= \sum_{k = 1}^{n} (P)_{i,k} (P)_{k,j} + \sum_{k = n + 1}^{2n} (P)_{i,k} (P)_{k,j} \\
+        &= \sum_{k = 1}^{n} 0 + \sum_{k = n + 1}^{2 n} (A)_{i,k-n} (B)_{k-n,j} \\
+        &= \sum_{k = 1}^{n} (A)_{i,k} (B)_{k,j} \\
+        &= (A B)_{i,j}
+\end{align*}
 
-    E podemos tomar $\tau_S(Q) = C$ com $C_{n \times n}$ sendo as primeiras $n$ colunas das primeiras $n$ linhas de $Q$. Desse modo, temos uma solução $C = A \cdot B$ para MM pois,
-    \begin{align*}
-        (C)_{i,j} &= (Q)_{i,j} \\
-            &= \sum_{k = 1}^{2n} (P)_{i,k} (P)_{k,j} \\
-            &= \sum_{k = 1}^{n} (P)_{i,k} (P)_{k,j} + \sum_{k = n + 1}^{2n} (P)_{i,k} (P)_{k,j} \\
-            &= \sum_{k = 1}^{n} 0 + \sum_{k = n + 1}^{2 n} (A)_{i,k-n} (B)_{k-n,j} \\
-            &= \sum_{k = 1}^{n} (A)_{i,k} (B)_{k,j} \\
-            &= (A B)_{i,j}
-    \end{align*}
+Tanto $\tau_I$ quanto $\tau_S$ fazem apenas a criação de uma nova matriz e, dependendo da representação das matrizes, cópias dos elementos. Portanto, o tempo de execução pode depender no máximo da quantidade de elementos na matriz, fazendo com que $T_{\tau_I}(n) \in O\left(\left(2n\right)^2\right) = O\left(n^2\right)$ e $T_{\tau_S}(n) \in O\left(n^2\right)$.
 
-    Tanto $\tau_I$ quanto $\tau_S$ fazem apenas a criação de uma nova matriz e, dependendo da representação das matrizes, cópias dos elementos. Portanto, o tempo de execução pode depender no máximo da quantidade de elementos na matriz, fazendo com que $T_{\tau_I}(n) \in O\left(\left(2n\right)^2\right) = O\left(n^2\right)$ e $T_{\tau_S}(n) \in O\left(n^2\right)$. Logo, a redução do problema tem tempo $O\left(n^2\right)$.
-\end{proof}
-
-\begin{theorem}
-    Se MM tem cota inferior $\Omega\left(n^{2.5}\right)$, então MQ também tem cota inferior $\Omega\left(n^{2.5}\right)$.
-\end{theorem}
-
-\begin{proof}
-    Seja $\pi_\text{MM}$ com tempo $\Theta\left(n^{2.5}\right)$ uma solução ótima de MM e considere que MQ tem uma cota inferior $\Omega(f(n))$ (?)
-\end{proof}
+Logo, temos uma função $f \in O\left(n^2\right)$ tal que $\text{MM} \propto_f \text{MQ}$. Note que $O\left(n^2\right) \subseteq o\left(n^{2.5}\right)$, portanto $\Omega\left(n^{2.5}\right)$ também deve ser uma cota inferior para MQ.
