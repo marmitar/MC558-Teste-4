@@ -31,7 +31,7 @@ Então, uma solução $Q_{2n \times 2n} = P \cdot P$ de MQ será dada por
 \[
     Q = P P
     = \begin{bmatrix} & A \\ B & \end{bmatrix} \begin{bmatrix} & A \\ B & \end{bmatrix}
-    = \begin{bmatrix} A B & \\ & A B \end{bmatrix}
+    = \begin{bmatrix} A B & \\ & B A \end{bmatrix}
 \]
 
 E podemos tomar $\tau_S(Q) = C$ com $C_{n \times n}$ sendo as primeiras $n$ colunas das primeiras $n$ linhas de $Q$. Desse modo, temos uma solução $C = A \cdot B$ para MM pois,
@@ -46,4 +46,4 @@ E podemos tomar $\tau_S(Q) = C$ com $C_{n \times n}$ sendo as primeiras $n$ colu
 
 Tanto $\tau_I$ quanto $\tau_S$ fazem apenas a criação de uma nova matriz e, dependendo da representação das matrizes, cópias dos elementos. Portanto, o tempo de execução pode depender no máximo da quantidade de elementos na matriz, fazendo com que $T_{\tau_I}(n) \in O\left(\left(2n\right)^2\right) = O\left(n^2\right)$ e $T_{\tau_S}(n) \in O\left(n^2\right)$.
 
-Logo, temos uma função $f \in O\left(n^2\right)$ tal que $\text{MM} \propto_f \text{MQ}$. Note que $O\left(n^2\right) \subseteq o\left(n^{2.5}\right)$, portanto $\Omega\left(n^{2.5}\right)$ também deve ser uma cota inferior para MQ.
+Logo, temos uma função $f \in O\left(n^2\right)$ tal que $\text{MM} \propto_f \text{MQ}$. Note que $f \in o\left(n^{2.5}\right)$, portanto a cota inferior $\Omega\left(n^{2.5}\right)$ de MM também deve ser uma cota inferior para MQ.
