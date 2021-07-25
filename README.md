@@ -1,7 +1,7 @@
 # MC558 2021s1 - Teste 4
 
 - [Enunciado](enunciado.pdf).
-- ~~Entrega~~.
+- [Entrega](entrega.pdf).
 
 ## Item 1 - *(50 pontos)*
 
