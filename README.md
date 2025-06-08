@@ -1,7 +1,7 @@
-# MC558 2021s1 - Teste 4
+# Análise de Algoritmos II (MC558) - Tarefa 1
 
-- [Enunciado](enunciado.pdf).
-- [Entrega](entrega.pdf).
+- [Enunciado](./enunciado.pdf)
+- [Entrega](./entrega.pdf)
 
 ## Item 1 - *(50 pontos)*
 
